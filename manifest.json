@@ -1,11 +1,11 @@
 {
-    "name": "Full Screen iframe App",
-    "short_name": "iframe App",
-    "description": "A simple PWA with a full screen iframe",
+    "name": "Auto Salone",
+    "short_name": "Auto Salone",
+    "description": "A web app for checking out hire vehicles.",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#2196f3",
+    "theme_color": "#ffffff",
     "icons": [
         {
             "src": "icons/icon-192x192.png",
