@@ -20,6 +20,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Add code to verify icon loading
+  function checkIconsExist() {
+    const iconUrls = ["icons/icon-192x192.png", "icons/icon-512x512.png"];
+
+    iconUrls.forEach((url) => {
+      const img = new Image();
+      img.onload = () => console.log(`Icon loaded successfully: ${url}`);
+      img.onerror = () => console.error(`Failed to load icon: ${url}`);
+      img.src = url;
+    });
+  }
+
+  // Call icon check function
+  checkIconsExist();
+
   // Hide loading indicator once the iframe content is loaded
   powerAppFrame.addEventListener("load", () => {
     setTimeout(() => {

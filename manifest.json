@@ -5,12 +5,11 @@
   "start_url": "./index.html",
   "display": "fullscreen",
   "background_color": "#ffffff",
-  "theme_color": "#2196F3",
+  "theme_color": "#ee1b24",
   "orientation": "portrait",
   "scope": "/",
   "categories": ["business", "productivity"],
   "icons": [
-
     {
       "src": "icons/icon-192x192.png",
       "sizes": "192x192",
