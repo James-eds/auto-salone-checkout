@@ -7,6 +7,7 @@ const urlsToCache = [
   "/manifest.json",
   "/icons/192.png",
   "/icons/512.png",
+  "/favicon.ico", // Add favicon to cache list
 ];
 
 // Install event - cache assets
@@ -40,6 +41,33 @@ self.addEventListener("activate", (event) => {
 
 // Fetch event - serve from cache when offline
 self.addEventListener("fetch", (event) => {
+  // Handle favicon request specifically
+  if (event.request.url.includes("favicon.ico")) {
+    event.respondWith(
+      // Try to return the icon from cache or redirect to our app icon
+      caches
+        .match("/icons/192.png")
+        .then((response) => {
+          if (response) {
+            return response;
+          }
+          return fetch("/icons/192.png");
+        })
+        .catch(() => {
+          // Create a simple transparent favicon
+          return new Response(
+            new Blob(
+              [
+                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M/wHwAEBgIApD5fRAAAAABJRU5ErkJggg==",
+              ],
+              { type: "image/png" }
+            )
+          );
+        })
+    );
+    return;
+  }
+
   // Don't cache PowerApps content - this is crucial for camera functionality
   if (event.request.url.includes("apps.powerapps.com")) {
     // Add credentials for cross-origin requests

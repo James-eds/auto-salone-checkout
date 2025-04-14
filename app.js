@@ -28,10 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(style);
 });
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
+    // Try both filenames to handle both local and Azure environments
+    const serviceWorkerFile = "/service-worker.js";
+
     navigator.serviceWorker
-      .register("/service-worker.js")
+      .register(serviceWorkerFile)
       .then((registration) => {
         console.log(
           "ServiceWorker registration successful with scope: ",
@@ -40,6 +44,24 @@ if ("serviceWorker" in navigator) {
       })
       .catch((error) => {
         console.log("ServiceWorker registration failed: ", error);
+        // Try alternative filename as fallback
+        navigator.serviceWorker
+          .register("/serviceworker.js")
+          .then((registration) => {
+            console.log(
+              "ServiceWorker registration successful with alternate name"
+            );
+          })
+          .catch((err) => {
+            console.error("Both ServiceWorker registration attempts failed");
+          });
       });
   });
 }
+
+// Add favicon link to prevent 404
+const favicon = document.createElement("link");
+favicon.rel = "icon";
+favicon.type = "image/png";
+favicon.href = "/icons/192.png"; // Use existing icon as favicon
+document.head.appendChild(favicon);
