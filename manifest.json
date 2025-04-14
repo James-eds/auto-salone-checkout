@@ -1,0 +1,27 @@
+{
+  "name": "Auto Salone Checkout",
+  "short_name": "Checkout",
+  "description": "Auto Salone Checkout PWA with camera access",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "background_color": "#ffffff",
+  "theme_color": "#2196F3",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["business", "productivity"],
+  "icons": [
+
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
