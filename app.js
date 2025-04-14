@@ -39,42 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Add fullscreen button for iOS (which doesn't support automatic fullscreen)
-  const isiOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  if (isiOS) {
-    const fullscreenButton = document.createElement("button");
-    fullscreenButton.textContent = "Enter Full Screen";
-    fullscreenButton.className = "fullscreen-button";
-    fullscreenButton.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            background: #0078d4;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: none;
-        `;
-
-    document.body.appendChild(fullscreenButton);
-
-    setTimeout(() => {
-      fullscreenButton.style.display = "block";
-    }, 2000);
-
-    fullscreenButton.addEventListener("click", () => {
-      requestFullScreen();
-      fullscreenButton.style.display = "none";
-    });
-  }
-
   // Handle user interaction to enable fullscreen mode
   document.addEventListener(
     "click",
