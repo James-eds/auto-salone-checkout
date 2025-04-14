@@ -24,12 +24,12 @@
         --theme-color-dark: #c5171f;
         --theme-color-light: #ff5a61;
         --safe-area-top: env(safe-area-inset-top, 20px);
-        --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
 
       html,
       body {
         height: 100%;
+        width: 100%;
         margin: 0;
         padding: 0;
         overflow: hidden;
@@ -37,16 +37,15 @@
 
       body {
         padding-top: var(--safe-area-top);
-        padding-bottom: var(--safe-area-bottom);
         display: flex;
         flex-direction: column;
       }
 
       #app {
         position: relative;
-        flex-grow: 1;
+        flex: 1 0 auto;
         width: 100%;
-        overflow: hidden;
+        min-height: calc(100% - var(--safe-area-top));
       }
 
       #powerapp-frame {
@@ -56,6 +55,7 @@
         width: 100%;
         height: 100%;
         border: none;
+        display: block;
       }
 
       .spinner {
