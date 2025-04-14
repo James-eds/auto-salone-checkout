@@ -1,1 +1,0 @@
-# auto-salone-checkout
