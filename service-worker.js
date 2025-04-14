@@ -1,38 +1,92 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const iframe = document.getElementById('main-frame');
+const CACHE_NAME = 'auto-salone-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/app.js',
+  '/manifest.json',
+  '/icons/192.png',
+  '/icons/512.png'
+];
+
+// Install event - cache assets
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
+  // Activate immediately
+  self.skipWaiting();
+});
+
+// Activate event - clean up old caches
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  // Take control of all clients
+  self.clients.claim();
+});
+
+// Fetch event - serve from cache when offline
+self.addEventListener('fetch', event => {
+  // Don't cache PowerApps content - this is crucial for camera functionality
+  if (event.request.url.includes('apps.powerapps.com')) {
+    return fetch(event.request);
+  }
   
-  // Ensure iframe has proper sizing (100% viewport height/width)
-  iframe.style.width = '100%';
-  iframe.style.height = '100%';
-  iframe.style.border = 'none';
-  
-  // Handle visibility changes
-  document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible') {
-      // Refresh iframe when tab becomes visible again
-      iframe.src = iframe.src;
-    }
-  });
-  
-  // Add CSS to ensure iframe covers the entire viewport
-  const style = document.createElement('style');
-  style.textContent = `
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
-    #main-frame {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      overflow: hidden;
-    }
-  `;
-  document.head.appendChild(style);
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+        
+        // Clone the request because it's a one-time use stream
+        const fetchRequest = event.request.clone();
+        
+        return fetch(fetchRequest).then(response => {
+          // Check if we received a valid response
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
+          
+          // Clone the response because it's a one-time use stream
+          const responseToCache = response.clone();
+          
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+            
+          return response;
+        });
+      })
+  );
+});
+
+// Handle message events (useful for communication with the iframe)
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Enable navigation preload
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    self.registration.navigationPreload.enable()
+  );
 });
