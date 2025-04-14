@@ -6,14 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   iframe.style.height = "100%";
   iframe.style.border = "none";
 
-  // Handle visibility changes
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible") {
-      // Refresh iframe when tab becomes visible again
-      iframe.src = iframe.src;
-    }
-  });
-
   // Add CSS to ensure iframe covers the entire viewport
   const style = document.createElement("style");
   style.textContent = `
@@ -39,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/serviceworker.js")
+      .register("/service-worker.js")
       .then((registration) => {
         console.log(
           "ServiceWorker registration successful with scope: ",
