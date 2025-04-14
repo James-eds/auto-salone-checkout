@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffffff" />
+    <meta
+      http-equiv="Feature-Policy"
+      content="camera *; microphone *; autoplay *"
+    />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=*, microphone=*, autoplay=*"
+    />
+    <!-- Added for iOS Safari compatibility -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <title>Auto Salone - Vehicle Checkout</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="manifest" href="manifest.json" />
@@ -14,8 +28,11 @@
       id="main-frame"
       src="https://apps.powerapps.com/play/3e0c573d-460f-4e62-a6ca-17240c5d4cc5?source=iframe"
       title="Full Screen Content"
-      allow="camera; microphone; autoplay; picture-in-picture"
+      allow="camera *; microphone *; autoplay *; picture-in-picture; fullscreen"
       allowfullscreen="true"
+      referrerpolicy="no-referrer-when-downgrade"
+      importance="high"
+      loading="eager"
     ></iframe>
 
     <script src="app.js"></script>
