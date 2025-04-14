@@ -23,6 +23,26 @@
         --theme-color: #ee1b24;
         --theme-color-dark: #c5171f;
         --theme-color-light: #ff5a61;
+        --safe-area-top: env(safe-area-inset-top, 20px);
+      }
+
+      body {
+        padding-top: var(--safe-area-top);
+      }
+
+      #app {
+        position: relative;
+        height: calc(100% - var(--safe-area-top));
+        width: 100%;
+      }
+
+      #powerapp-frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
       }
 
       .spinner {
