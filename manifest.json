@@ -1,7 +1,7 @@
 {
-  "name": "Auto Salone Checkout",
-  "short_name": "Checkout",
-  "description": "Auto Salone Checkout PWA with camera access",
+  "name": "Vehicle Checkout",
+  "short_name": "Vehicle Checkout",
+  "description": "Auto Salone Vehicle Checkout Form",
   "start_url": "./index.html",
   "display": "fullscreen",
   "background_color": "#ffffff",
