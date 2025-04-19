@@ -21,6 +21,8 @@
     <style>
       :root {
         --safe-area-top: env(safe-area-inset-top, 20px);
+        --safe-area-bottom: env(safe-area-inset-bottom, 10px);
+        --theme-color: #ee1b24; /* Keep theme color for spinner */
       }
 
       html,
@@ -30,18 +32,23 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        background-color: #ffffff; /* Set background to white */
       }
 
       body {
+        padding-top: var(--safe-area-top);
+        padding-bottom: var(--safe-area-bottom);
         display: flex;
         flex-direction: column;
+        box-sizing: border-box; /* Include padding in height calculation */
       }
 
       #app {
         position: relative;
-        flex: 1 0 auto;
+        flex: 1 1 auto; /* Allow shrinking and growing */
         width: 100%;
-        min-height: calc(100% - var(--safe-area-top));
+        /* Height is implicitly determined by flexbox */
+        overflow: hidden; /* Prevent iframe overflow */
       }
 
       #powerapp-frame {
@@ -55,8 +62,8 @@
       }
 
       .spinner {
-        border: 4px solid rgba(238, 27, 36, 0.2);
-        border-top-color: #ee1b24;
+        border: 4px solid rgba(238, 27, 36, 0.2); /* Use theme color for spinner */
+        border-top-color: var(--theme-color);
       }
 
       #loading {
