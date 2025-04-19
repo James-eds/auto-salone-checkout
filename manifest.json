@@ -5,7 +5,7 @@
   "start_url": "./index.html",
   "display": "fullscreen",
   "background_color": "#ffffff",
-  "theme_color": "#ee1b24",
+  "theme_color": "#ffffff",
   "orientation": "portrait",
   "scope": "/",
   "categories": ["business", "productivity"],
