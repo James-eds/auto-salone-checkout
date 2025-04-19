@@ -69,10 +69,3 @@ body {
   background: #fff;
   z-index: 1;
 }
-
-/* iOS specific styles */
-@supports (-webkit-touch-callout: none) {
-  #app {
-    height: -webkit-fill-available;
-  }
-}
