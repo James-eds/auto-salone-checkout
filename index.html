@@ -33,22 +33,28 @@
         padding: 0;
         overflow: hidden;
         background-color: #ffffff; /* Set background to white */
+        position: relative; /* Needed for absolute positioning of child */
       }
 
+      /* Remove body padding and flex */
       body {
-        padding-top: var(--safe-area-top);
-        padding-bottom: var(--safe-area-bottom);
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box; /* Include padding in height calculation */
+        /* padding-top: var(--safe-area-top); */
+        /* padding-bottom: var(--safe-area-bottom); */
+        /* display: flex; */
+        /* flex-direction: column; */
+        /* box-sizing: border-box; */
       }
 
+      /* Position #app absolutely within the safe areas */
       #app {
-        position: relative;
-        flex: 1 1 auto; /* Allow shrinking and growing */
-        width: 100%;
-        /* Height is implicitly determined by flexbox */
-        overflow: hidden; /* Prevent iframe overflow */
+        position: absolute;
+        top: var(--safe-area-top);
+        bottom: var(--safe-area-bottom);
+        left: 0;
+        right: 0;
+        /* flex: 1 1 auto; */ /* No longer needed */
+        /* width: 100%; */ /* Set by left/right */
+        /* overflow: hidden; */ /* Keep if needed, but iframe should fill */
       }
 
       #powerapp-frame {
