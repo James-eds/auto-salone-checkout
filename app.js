@@ -6,6 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function requestFullScreen() {
     const docElement = document.documentElement;
 
+    // Check if this is iOS
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+      // iOS handles fullscreen differently, we just ensure the body has proper padding
+      document.body.style.paddingTop = "env(safe-area-inset-top)";
+      return; // Exit early as requestFullscreen doesn't work well on iOS
+    }
+
     if (docElement.requestFullscreen) {
       docElement.requestFullscreen();
     } else if (docElement.webkitRequestFullscreen) {

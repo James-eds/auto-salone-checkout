@@ -10,6 +10,8 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: #f0f0f0;
+  /* Add padding for iOS status bar */
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 #app {
@@ -68,4 +70,6 @@ body {
   border: none;
   background: #fff;
   z-index: 1;
+  /* Add padding for iOS status bar */
+  padding-top: env(safe-area-inset-top, 0px);
 }

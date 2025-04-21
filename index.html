@@ -8,10 +8,7 @@
     />
     <meta name="theme-color" content="#ffffff" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta http-equiv="Permissions-Policy" content="camera=*, microphone=*" />
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="credentialless" />
     <title>Auto Salone Checkout</title>
@@ -30,6 +27,8 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        /* Add padding for iOS status bar */
+        padding-top: var(--safe-area-top);
       }
 
       body {
@@ -52,6 +51,14 @@
         height: 100%;
         border: none;
         display: block;
+      }
+
+      /* Fix for iPhone status bar */
+      @supports (-webkit-touch-callout: none) {
+        #powerapp-frame {
+          margin-top: var(--safe-area-top);
+          height: calc(100% - var(--safe-area-top));
+        }
       }
 
       .spinner {
