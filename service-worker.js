@@ -4,8 +4,8 @@ const ASSETS_TO_CACHE = [
   "./app.js",
   "./styles.css",
   "./manifest.json",
-  "./icons/icon-192x192.png",
-  "./icons/icon-512x512.png",
+  "./icons/192.png",
+  "./icons/512.png",
 ];
 
 // Install event - cache assets
@@ -13,10 +13,7 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => {
-        console.log("Caching app shell");
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
+      .then((cache) => cache.addAll(ASSETS_TO_CACHE))
       .then(() => self.skipWaiting())
   );
 });
@@ -29,13 +26,8 @@ self.addEventListener("activate", (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames
-            .filter((cacheName) => {
-              return cacheName !== CACHE_NAME;
-            })
-            .map((cacheName) => {
-              console.log("Deleting outdated cache:", cacheName);
-              return caches.delete(cacheName);
-            })
+            .filter((cacheName) => cacheName !== CACHE_NAME)
+            .map((cacheName) => caches.delete(cacheName))
         );
       })
       .then(() => self.clients.claim())
@@ -44,7 +36,7 @@ self.addEventListener("activate", (event) => {
 
 // Fetch event - serve from cache first, then network
 self.addEventListener("fetch", (event) => {
-  // Skip cross-origin requests, like those for the PowerApps
+  // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
     return;
   }
@@ -55,31 +47,17 @@ self.addEventListener("fetch", (event) => {
         return response;
       }
 
-      // Clone the request because it's a one-time use stream
-      const fetchRequest = event.request.clone();
-
-      return fetch(fetchRequest).then((response) => {
-        // Check if valid response
+      return fetch(event.request.clone()).then((response) => {
         if (!response || response.status !== 200 || response.type !== "basic") {
           return response;
         }
 
-        // Clone the response because it's a one-time use stream
-        const responseToCache = response.clone();
-
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
+          cache.put(event.request, response.clone());
         });
 
         return response;
       });
     })
   );
-});
-
-// Handle messages from clients
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
 });
