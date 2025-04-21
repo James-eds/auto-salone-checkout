@@ -63,7 +63,7 @@ if (isIOS && !isInStandaloneMode) {
             `;
       document.body.appendChild(iosPrompt);
 
-      // Style the iOS prompt
+      // Style the iOS prompt with standard Safari-like styling
       const style = document.createElement("style");
       style.innerHTML = `
                 #ios-install-prompt {
@@ -71,11 +71,11 @@ if (isIOS && !isInStandaloneMode) {
                     bottom: 20px;
                     left: 10px;
                     right: 10px;
-                    background: rgba(250, 250, 250, 0.95);
+                    background: rgba(248, 248, 248, 0.95);
                     border-radius: 10px;
-                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                     z-index: 1000;
-                    font-family: -apple-system, sans-serif;
+                    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
                 }
                 .ios-prompt-container {
                     padding: 15px;
@@ -87,18 +87,20 @@ if (isIOS && !isInStandaloneMode) {
                     margin-bottom: 10px;
                 }
                 .ios-prompt-header span {
-                    font-weight: bold;
+                    font-weight: 600;
                     font-size: 16px;
+                    color: #000000;
                 }
                 #close-ios-prompt {
                     background: none;
                     border: none;
                     font-size: 22px;
-                    color: #999;
+                    color: #8E8E93;
                     cursor: pointer;
                 }
                 .ios-prompt-body {
                     font-size: 14px;
+                    color: #000000;
                 }
                 .share-icon {
                     display: inline-block;
