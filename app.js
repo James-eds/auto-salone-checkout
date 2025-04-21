@@ -6,26 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
   function requestFullScreen() {
     const docElement = document.documentElement;
 
-    // Check if this is iOS
-    const isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS) {
-      // iOS handles fullscreen differently, we just ensure the body has proper padding
-      document.body.style.paddingTop = "env(safe-area-inset-top)";
-      return; // Exit early as requestFullscreen doesn't work well on iOS
+    // Skip for iOS as it handles fullscreen differently
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+      return;
     }
 
+    // Request fullscreen using the appropriate method
     if (docElement.requestFullscreen) {
       docElement.requestFullscreen();
     } else if (docElement.webkitRequestFullscreen) {
-      // Safari & Chrome
       docElement.webkitRequestFullscreen();
     } else if (docElement.mozRequestFullscreen) {
-      // Firefox
       docElement.mozRequestFullscreen();
     } else if (docElement.msRequestFullscreen) {
-      // IE/Edge
       docElement.msRequestFullscreen();
     }
   }
@@ -49,9 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
   powerAppFrame.addEventListener("load", () => {
     setTimeout(() => {
       loadingElement.style.opacity = "0";
-      setTimeout(() => {
-        loadingElement.style.display = "none";
-      }, 500);
+      setTimeout(() => (loadingElement.style.display = "none"), 500);
     }, 1000);
 
     // Set up message listener for potential communication from the iframe
@@ -73,17 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
         navigator.mediaDevices
           .getUserMedia({ video: true })
           .then((stream) => {
-            // Stop all tracks to release camera immediately
             stream.getTracks().forEach((track) => track.stop());
-
-            // Now that we have camera permission, try for fullscreen
             requestFullScreen();
           })
-          .catch((error) => {
-            console.log("Camera permission denied or error:", error);
-            // Try fullscreen anyway
-            requestFullScreen();
-          });
+          .catch(() => requestFullScreen());
       } else {
         requestFullScreen();
       }
@@ -93,14 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add orientation change handler
   window.addEventListener("orientationchange", () => {
-    // Reset fullscreen after orientation changes
     if (document.fullscreenElement) {
       setTimeout(() => {
         document
           .exitFullscreen()
-          .then(() => {
-            requestFullScreen();
-          })
+          .then(requestFullScreen)
           .catch((err) => console.error(err));
       }, 300);
     }

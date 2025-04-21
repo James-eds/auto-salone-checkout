@@ -1,3 +1,9 @@
+:root {
+  --safe-area-top: env(safe-area-inset-top, 20px);
+  --primary-color: #ee1b24;
+  --primary-color-light: rgba(238, 27, 36, 0.2);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,19 +14,26 @@ html,
 body {
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+  padding-top: var(--safe-area-top);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
   background-color: #f0f0f0;
-  /* Add padding for iOS status bar */
-  padding-top: env(safe-area-inset-top, 0px);
 }
 
 #app {
+  position: relative;
+  flex: 1 0 auto;
   width: 100%;
-  height: 100%;
+  min-height: calc(100% - var(--safe-area-top));
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
 }
 
 #loading {
@@ -42,8 +55,8 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 4px solid rgba(0, 120, 212, 0.2);
-  border-top-color: #0078d4;
+  border: 4px solid var(--primary-color-light);
+  border-top-color: var(--primary-color);
   animation: spin 1s infinite linear;
   margin-bottom: 20px;
 }
@@ -57,7 +70,7 @@ body {
 #loading p {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
-  color: #333;
+  color: var(--primary-color);
   font-size: 18px;
 }
 
@@ -68,8 +81,15 @@ body {
   width: 100%;
   height: 100%;
   border: none;
+  display: block;
   background: #fff;
   z-index: 1;
-  /* Add padding for iOS status bar */
-  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Fix for iPhone status bar */
+@supports (-webkit-touch-callout: none) {
+  #powerapp-frame {
+    margin-top: var(--safe-area-top);
+    height: calc(100% - var(--safe-area-top));
+  }
 }
