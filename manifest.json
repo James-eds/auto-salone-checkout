@@ -1,11 +1,11 @@
 {
-  "name": "Auto Salone Vehicle Checkout",
-  "short_name": "Vehicle Checkout",
-  "description": "Auto Salone Vehicle Checkout",
+  "name": "C.A.R.S Vehicle Checkout",
+  "short_name": "C.A.R.S",
+  "description": "C.A.R.S Vehicle Checkout",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#00a6ca",
   "icons": [
     {
       "src": "icons/192.png",
